@@ -1,79 +1,47 @@
 import React, { useRef, useState } from "react";
 import emailjs from '@emailjs/browser';
-import ContactInput from './ContactInput'
-import { isEmpty, isValidEmail } from "../../utils/formValidate";
-
-const errorMessages = {
-    required: 'Este campo é obrigatório.',
-    invalidEmail: 'O email não é válido.',
-};
+import ContactInput from './ContactInput';
+import { validateForm } from "../../utils/formValidate";
 
 const shakeDuration = 200;  // in milliseconds
-const successDuration = 500; // in milliseconds
 
 function Contact() {
     const formRef = useRef<HTMLFormElement | null>(null);
     const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
     const [shake, setShake] = useState<boolean>(false);
-    const [success, setSuccess] = useState<boolean>(false);
-
-    const validateForm = () => {
-        const form = formRef.current;
-        if (!form) return false;
-
-        const name = form['from_name'].value.trim();
-        const email = form['from_email'].value.trim();
-        const message = form['message'].value.trim();
-
-        const newErrors: { name?: string; email?: string; message?: string } = {};
-
-        if (isEmpty(name)) {
-            newErrors.name = errorMessages.required;
-        }
-
-        if (isEmpty(email)) {
-            newErrors.email = errorMessages.required;
-        } else if (!isValidEmail(email)) {
-            newErrors.email = errorMessages.invalidEmail;
-        }
-
-        if (isEmpty(message)) {
-            newErrors.message = errorMessages.required;
-        }
-
-        setErrors(newErrors);
-
-        const hasErrors = Object.keys(newErrors).length > 0;
-
-        if (hasErrors) {
-            setShake(true);
-            setTimeout(() => setShake(false), shakeDuration);
-        }
-
-        return !hasErrors;
-    };
+    const [loading, setLoading] = useState<boolean>(false);
 
     const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!formRef.current) return;
-        if (!validateForm()) return;
+
+        const formErrors = validateForm(formRef.current);
+        setErrors(formErrors);
+
+        const hasErrors = Object.keys(formErrors).length > 0;
+
+        if (hasErrors) {
+            setShake(true);
+            setTimeout(() => setShake(false), shakeDuration);
+            return;
+        }
+
+        setLoading(true);
 
         emailjs.sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID!, process.env.REACT_APP_EMAILJS_TEMPLATE_ID!, formRef.current, {
             publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY!,
-        })
-            .then(() => {
-                    setShake(false);
-                    setSuccess(true);
-                    if (formRef.current) {
-                        formRef.current.reset();
-                    }
-                    setTimeout(() => setSuccess(false), successDuration);
-                },
-                (error) => {
-                    console.log(error.text);
+        }).then(() => {
+                setLoading(false);
+                if (formRef.current) {
+                    formRef.current.reset();
                 }
-            );
+            },
+            (error) => {
+                console.log(error.text);
+                setLoading(false);
+            }
+        );
     };
 
     return (
@@ -95,9 +63,10 @@ function Contact() {
                     </div>
                     <button
                         type="submit"
-                        className={`w-full py-3 px-6 bg-primary text-white font-bold rounded-md shadow-sm duration-300 ease-in-out hover:opacity-80 ${shake ? 'animate-shake' : ''} ${success ? 'animate-success' : ''}`}
+                        className={`w-full py-3 px-6 bg-primary text-white font-bold rounded-md shadow-sm duration-300 ease-in-out hover:opacity-80 ${shake ? 'animate-shake' : ''}`}
+                        disabled={loading}
                     >
-                        Enviar
+                        {loading ? "A enviar..." : "Enviar"}
                     </button>
                 </form>
             </div>

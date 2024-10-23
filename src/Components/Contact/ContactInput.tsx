@@ -17,7 +17,7 @@ const ContactInput = memo(({placeholder, id, name, className}: ContactInputProps
             id={id}
             name={name}
             className={`mt-1 block w-full p-3 text-lighttext border border-gray-300 rounded-md shadow-sm focus:outline-none ${className}`}
-            placeholder="O seu nome"
+            placeholder={placeholder}
         />
     </>
 })
