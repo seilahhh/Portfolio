@@ -17,6 +17,13 @@ const Projects: Project[] = [
         github: "https://github.com/seilahAlbino/Three.JS-Shop-Example",
         website: "https://threeshop.netlify.app/",
     },
+    {
+        name: "Especialidades CNE",
+        image: "cne_specialities.jpg",
+        projectType: ProjectType.Professional,
+        description: "Aplicação desenvolvida para escuteiros descobrirem as especialidades com que mais se identificam. Através de uma interface simples e intuitiva, os utilizadores respondem a questões que os ajudam a descobrir quais as especialidades que melhor correspondem aos seus interesses e aptidões.",
+        website: "https://especialidades-cne.vercel.app/",
+    },
 ]
 
 export default Projects;
