@@ -30,7 +30,7 @@ function Introduction() {
               }
             </p>
             <div id="social-media">
-              <a className="mx-2 text-md md:text-xl lg:text-2xl" href="https://github.com/seilahAlbino" target="_blank" rel="noreferrer">
+              <a className="mx-2 text-md md:text-xl lg:text-2xl" href="https://github.com/seilahhh" target="_blank" rel="noreferrer">
                 <i className="bi bi-github"></i>
               </a>
               <a className="mx-2 text-md md:text-xl lg:text-2xl" href="#linkedin" target="_blank" rel="noreferrer">
