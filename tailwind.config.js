@@ -10,7 +10,7 @@ module.exports = {
                 lightbackground: "#f4f5f0",
                 lighttext: "#242424",
 
-                darkbackground: "#0b0a0f",
+                darkbackground: "#16141e",
                 darktext: "#dbdbdb",
 
                 light: "#fff",
