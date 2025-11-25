@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import Navbar from "../Components/Navbar/Navbar";
 import About from "../Components/About/About";
 import Introduction from "../Components/Introduction/Introduction";
@@ -7,85 +7,92 @@ import Contact from "../Components/Contact/Contact";
 import ScrollToTopButton from "../Components/ScrollToTop/ScrollToTopButton";
 import { gsap } from "gsap";
 import {
-    setupSimpleAnimation,
-    setupTimelineAnimation,
+  setupSimpleAnimation,
+  setupTimelineAnimation,
 } from "../Animations/gsapAnimations";
 import {
-    aboutAnimationSettings,
-    contactAnimationSettings,
-    projectAnimationSettings,
+  aboutAnimationSettings,
+  contactAnimationSettings,
+  projectAnimationSettings,
 } from "../Animations/gsapAnimationsOptions";
 
+interface AnimationItem {
+  selector: string | NodeListOf<HTMLElement>;
+  settings: any;
+  type: "simple" | "timeline";
+}
+
 function Home() {
-    const el = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
-        const animations = [
-            { selector: `.aboutTitle`, settings: aboutAnimationSettings.title },
-            { selector: `.aboutText`, settings: aboutAnimationSettings.aboutText },
-            { selector: `.tecnologias`, settings: aboutAnimationSettings.tecnologias },
-            { selector: `.projectsTitle`, settings: projectAnimationSettings.title },
-            { selector: `.contactTitle`, settings: contactAnimationSettings.title },
-            { selector: `.contactForm`, settings: contactAnimationSettings.contact },
-        ];
+  useEffect(() => {
+    const projectElements = projectsRef.current?.querySelectorAll<HTMLElement>(".project");
 
-        animations.forEach(({ selector, settings }) => {
-            const { initial, final, trigger, customOptions } = settings;
-            setupSimpleAnimation(
-                selector,
-                initial,
-                final,
-                trigger,
-                customOptions
-            );
-        });
+    const animations: AnimationItem[] = [
+      { selector: ".aboutTitle", settings: aboutAnimationSettings.title, type: "simple" },
+      { selector: ".aboutText", settings: aboutAnimationSettings.aboutText, type: "simple" },
+      { selector: ".tecnologias", settings: aboutAnimationSettings.tecnologias, type: "simple" },
+      { selector: ".projectsTitle", settings: projectAnimationSettings.title, type: "simple" },
+      { selector: ".contactTitle", settings: contactAnimationSettings.title, type: "simple" },
+      { selector: ".contactForm", settings: contactAnimationSettings.contact, type: "simple" },
+    ];
 
-        const projects = el.current?.querySelectorAll<HTMLElement>(".project");
-        
-        if (projects) {
-            setupTimelineAnimation(
-                projects,
-                projectAnimationSettings.projects.initial,
-                projectAnimationSettings.projects.final,
-                projectAnimationSettings.projects.trigger,
-                projectAnimationSettings.projects.customOptions
-            );
-        }
+    if (projectElements && projectElements.length > 0) {
+      animations.push({
+        selector: projectElements,
+        settings: projectAnimationSettings.projects,
+        type: "timeline",
+      });
+    }
 
-        return () => {
-            gsap.killTweensOf(".aboutTitle");
-            gsap.killTweensOf(".aboutText");
-            gsap.killTweensOf(".tecnologias");
-            gsap.killTweensOf(".projectsTitle");
-            gsap.killTweensOf(".project");
-            gsap.killTweensOf(".contactTitle");
-            gsap.killTweensOf(".contactForm");
-        };
-    }, []);
+    animations.forEach(({ selector, settings, type }) => {
+      const { initial, final, trigger, customOptions } = settings;
+      if (type === "simple") {
+        setupSimpleAnimation(selector, initial, final, trigger, customOptions);
+      } else if (type === "timeline" && selector instanceof NodeList) {
+        setupTimelineAnimation(selector, initial, final, trigger, customOptions);
+      }
+    });
 
-    return (
-        <div className="App bg-lightbackground dark:bg-darkbackground text-lighttext dark:text-darktext overflow-hidden">
-            <header>
-                <Navbar />
-                <Introduction />
-            </header>
-            <main>
-                <div id="about">
-                    <About />
-                </div>
+    return () => {
+      const selectorsToKill = [
+        ".aboutTitle",
+        ".aboutText",
+        ".tecnologias",
+        ".projectsTitle",
+        ".project",
+        ".contactTitle",
+        ".contactForm",
+      ];
+      selectorsToKill.forEach((selector) => gsap.killTweensOf(selector));
+    };
+}, []);
 
-                <div ref={el} id="projects" className="mt-5">
-                    <ProjectsSection />
-                </div>
 
-                <div id="contact" className="mt-5">
-                    <Contact />
-                </div>
+  return (
+    <div className="App bg-lightbackground dark:bg-darkbackground text-lighttext dark:text-darktext overflow-hidden">
+      <header>
+        <Navbar />
+        <Introduction />
+      </header>
 
-                <ScrollToTopButton />
-            </main>
-        </div>
-    );
+      <main>
+        <section id="about">
+          <About />
+        </section>
+
+        <section ref={projectsRef} id="projects" className="mt-5">
+          <ProjectsSection />
+        </section>
+
+        <section id="contact" className="mt-5">
+          <Contact />
+        </section>
+
+        <ScrollToTopButton />
+      </main>
+    </div>
+  );
 }
 
 export default Home;
