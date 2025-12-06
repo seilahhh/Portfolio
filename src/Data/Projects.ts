@@ -7,7 +7,7 @@ const Projects: Project[] = [
         image: "caparte.png",
         projectType: ProjectType.Personal,
         description: "Caparte é uma aplicação interativa que usa <b>Fabric.js</b> para criar capas personalizadas. Oferece experiência de design intuitiva e em tempo real, permitindo ajustar textos, imagens e elementos gráficos com facilidade.",
-        website: "https://custom-cases-five.vercel.app/",
+        website: "https://caparte.vercel.app/",
     },
     {
         name: "Three Shop",
