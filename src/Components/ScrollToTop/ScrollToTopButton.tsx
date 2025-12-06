@@ -32,6 +32,7 @@ const ScrollToTopButton: React.FC = () => {
                 <button
                     onClick={scrollToTop}
                     className="p-2 w-10 h-10 bg-primary text-white rounded-full shadow-md duration-300 ease-in-out hover:opacity-80"
+                    aria-label="Voltar ao topo"
                 >
                     <i className="bi bi-arrow-up"></i>
                 </button>

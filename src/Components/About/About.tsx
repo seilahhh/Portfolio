@@ -4,7 +4,7 @@ import TechnologyCard from "../Cards/TechnologyCard";
 
 function About() {
     return (
-        <section className="p-8 px-12">
+        <section id="about" className="p-8 px-12">
             <h2 className="text-4xl font-bold mb-12 text-center text-primary aboutTitle">
                 Sobre
             </h2>

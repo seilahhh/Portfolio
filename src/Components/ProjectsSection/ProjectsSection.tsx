@@ -2,9 +2,11 @@ import React from "react";
 import Projects from "../../Data/Projects";
 import ProjectCard from "../Cards/ProjectCard";
 
-const ProjectsSection = () => (
-    <section className="p-8 mt-10">
-        <h2 className="text-4xl font-bold mb-12 text-center text-primary projectsTitle">Projetos</h2>
+const ProjectsSection = React.forwardRef<HTMLElement, {}>((_, ref) => (
+    <section ref={ref} id="projects" className="p-8 mt-14">
+        <h2 className="text-4xl font-bold mb-12 text-center text-primary projectsTitle">
+            Projetos
+        </h2>
         <div className="flex flex-wrap gap-8 justify-center">
             {Projects.map((project) => (
                 <ProjectCard
@@ -19,6 +21,6 @@ const ProjectsSection = () => (
             ))}
         </div>
     </section>
-);
+));
 
 export default ProjectsSection;
