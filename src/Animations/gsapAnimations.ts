@@ -37,8 +37,8 @@ export const setupTimelineAnimation = (
     options: AnimationOptions = {}
 ) => {
     const {
-        start = "top 500px",
-        end = "bottom 600px",
+        start = "top 80%",
+        end = "bottom 100%",
         markers = false,
     } = options;
     
