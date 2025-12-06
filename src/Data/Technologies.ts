@@ -30,12 +30,28 @@ const Technologies: Technology[] = [
         icon: "tailwindcss.png",
     },
     {
-        name: "Unity (C#)",
-        icon: "unity.png",
-    },
-    {
         name: "Firebase",
         icon: "firebase.png",
+    },
+    {
+        name: ".NET",
+        icon: "dotnet.png",
+    },
+    {
+        name: "Java",
+        icon: "java.png",
+    },
+    {
+        name: "Laravel",
+        icon: "laravel.png",
+    },
+    {
+        name: "MySQL",
+        icon: "mysql.png",
+    },
+    {
+        name: "PostgreSQL",
+        icon: "postgresql.png",
     }
 ]
 
