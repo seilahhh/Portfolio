@@ -3,7 +3,6 @@ import Navbar from "../Components/Navbar/Navbar";
 import About from "../Components/About/About";
 import Introduction from "../Components/Introduction/Introduction";
 import ProjectsSection from "../Components/ProjectsSection/ProjectsSection";
-import Contact from "../Components/Contact/Contact";
 import ScrollToTopButton from "../Components/ScrollToTop/ScrollToTopButton";
 import { gsap } from "gsap";
 import {
@@ -12,7 +11,6 @@ import {
 } from "../Animations/gsapAnimations";
 import {
   aboutAnimationSettings,
-  contactAnimationSettings,
   projectAnimationSettings,
 } from "../Animations/gsapAnimationsOptions";
 
@@ -33,8 +31,6 @@ function Home() {
       { selector: ".aboutText", settings: aboutAnimationSettings.aboutText, type: "simple" },
       { selector: ".tecnologias", settings: aboutAnimationSettings.tecnologias, type: "simple" },
       { selector: ".projectsTitle", settings: projectAnimationSettings.title, type: "simple" },
-      { selector: ".contactTitle", settings: contactAnimationSettings.title, type: "simple" },
-      { selector: ".contactForm", settings: contactAnimationSettings.contact, type: "simple" },
     ];
 
     if (projectElements && projectElements.length > 0) {
@@ -61,8 +57,6 @@ function Home() {
         ".tecnologias",
         ".projectsTitle",
         ".project",
-        ".contactTitle",
-        ".contactForm",
       ];
       selectorsToKill.forEach((selector) => gsap.killTweensOf(selector));
     };
@@ -83,10 +77,6 @@ function Home() {
 
         <section ref={projectsRef} id="projects" className="mt-5">
           <ProjectsSection />
-        </section>
-
-        <section id="contact" className="mt-5">
-          <Contact />
         </section>
 
         <ScrollToTopButton />
