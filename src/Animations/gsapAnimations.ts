@@ -12,7 +12,7 @@ export const setupSimpleAnimation = (
     options: AnimationOptions = {}
 ) => {
     const {
-        start = "top 500px",
+        start = "top 600px",
         end = "bottom 600px",
         markers = false,
     } = options;
