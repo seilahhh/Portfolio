@@ -4,7 +4,6 @@ const options = [
     { title: "Introdução", to: "#introduction" },
     { title: "Sobre", to: "#about" },
     { title: "Projetos", to: "#projects" },
-    { title: "Contato", to: "#contact" },
 ];
 
 function Navbar() {
